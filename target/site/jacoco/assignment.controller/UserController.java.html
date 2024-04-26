@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">facultyproject</a> &gt; <a href="index.source.html" class="el_package">assignment.controller</a> &gt; <span class="el_source">UserController.java</span></div><h1>UserController.java</h1><pre class="source lang-java linenums">package assignment.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import assignment.entity.User;
+import assignment.repository.UserRepository;
+
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+@RequestMapping(&quot;/api/users&quot;)
+@CrossOrigin(&quot;*&quot;)
+<span class="fc" id="L15">public class UserController {</span>
+
+    @Autowired
+    private UserRepository userRepository;
+
+    // Get all users
+    @GetMapping
+    public List&lt;User&gt; getAllUsers() {
+<span class="fc" id="L23">        return userRepository.findAll();</span>
+    }
+
+    // Search users by name or email
+    @GetMapping(&quot;/search/{query}&quot;)
+    public List&lt;User&gt; searchUsers(@PathVariable String query) {
+<span class="pc bpc" id="L29" title="1 of 4 branches missed.">    	if (query != null &amp;&amp; !query.isEmpty()) {</span>
+<span class="fc" id="L30">            return userRepository.searchUsers(query);</span>
+        } else {
+            // If query is empty or null, return all users
+<span class="fc" id="L33">            return userRepository.findAll();</span>
+        }
+    }
+
+    // Create a new user
+    @PostMapping
+    public User createUser(@RequestBody User user) {
+<span class="fc" id="L40">        return userRepository.save(user);</span>
+    }
+
+    // Update user by ID
+    @PutMapping(&quot;/{id}&quot;)
+    public User updateUser(@PathVariable Long id, @RequestBody User modifiedUserData) {
+<span class="fc" id="L46">        Optional&lt;User&gt; existingUser = userRepository.findById(id);</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">        if (existingUser.isPresent()) {</span>
+<span class="fc" id="L48">            User user = existingUser.get();</span>
+            // Update user fields as needed
+<span class="fc" id="L50">            user.setFirstname(modifiedUserData.getFirstname());</span>
+            // Update other fields similarly
+<span class="fc" id="L52">            return userRepository.save(user);</span>
+        }
+<span class="fc" id="L54">        return null; // User not found</span>
+    }
+
+    // Delete user by ID
+    @DeleteMapping(&quot;/{id}&quot;)
+    public void deleteUser(@PathVariable Long id) {
+<span class="nc" id="L60">        userRepository.deleteById(id);</span>
+<span class="nc" id="L61">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

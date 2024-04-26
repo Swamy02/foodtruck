@@ -1,0 +1,7 @@
+assignment\service\SQSConfig.class
+assignment\repository\UserRepository.class
+assignment\SecurityConfig.class
+assignment\controller\UserController.class
+assignment\WebConfig.class
+assignment\UserApplication.class
+assignment\entity\User.class

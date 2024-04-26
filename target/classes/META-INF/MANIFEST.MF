@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Build-Jdk-Spec: 15
+Implementation-Title: foodtruckproject
+Implementation-Version: 0.0.1-SNAPSHOT
+Main-Class: foodtruck.UserApplication.java
+Created-By: Maven Integration for Eclipse
+
