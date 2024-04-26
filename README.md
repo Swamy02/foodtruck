@@ -38,3 +38,6 @@ Method: GET
 Response: JSON array containing information about all food trucks.
 
 
+
+
+
